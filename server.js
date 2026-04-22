@@ -1,0 +1,31 @@
+const express = require('express');
+const dotenv = require('dotenv');
+const cors = require('cors');
+const connectDB = require('./config/db');
+
+// Load env vars
+dotenv.config();
+
+// Connect to database
+connectDB();
+
+const app = express();
+
+// Middleware
+app.use(cors()); // Enable CORS for frontend integration
+app.use(express.json()); // Parse JSON bodies
+app.use(express.urlencoded({ extended: false })); // Parse URL-encoded bodies
+
+// Routes
+app.use('/api/announcements', require('./routes/announcementRoutes'));
+
+// Basic error handler mapping for unhandled routes
+app.use((req, res, next) => {
+    res.status(404).json({ message: 'Route not found' });
+});
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
