@@ -78,10 +78,24 @@ No authentication required.
 ### 3.2 Get Single Announcement
 -   **Endpoint**: `GET http://localhost:5000/api/announcements/:id`
 
-## 4. Announcements (Admin Only)
-These endpoints require `Authorization: Bearer <TOKEN>` in the request headers.
+## 4. Achievements (Public)
+No authentication required.
 
-### 4.1 Create Announcement
+### 4.1 Get All Achievements
+-   **Endpoint**: `GET http://localhost:5000/api/achievements`
+-   **Query Params (Optional)**:
+    -   `page`: `1`
+    -   `limit`: `10`
+    -   `title`: `juara` (Search by title)
+    -   `award`: `emas` (Filter by award)
+
+### 4.2 Get Single Achievement
+-   **Endpoint**: `GET http://localhost:5000/api/achievements/:id`
+
+## 5. Announcements (Admin Only)
+Requires `Authorization: Bearer <TOKEN>` in the request headers.
+
+### 5.1 Create Announcement
 -   **Endpoint**: `POST http://localhost:5000/api/announcements/admin`
 -   **Headers**:
     -   `Content-Type`: `application/json`
@@ -96,7 +110,7 @@ These endpoints require `Authorization: Bearer <TOKEN>` in the request headers.
     }
     ```
 
-### 4.2 Update Announcement
+### 5.2 Update Announcement
 -   **Endpoint**: `PUT http://localhost:5000/api/announcements/admin/:id`
 -   **Headers**:
     -   `Content-Type`: `application/json`
@@ -109,26 +123,63 @@ These endpoints require `Authorization: Bearer <TOKEN>` in the request headers.
     }
     ```
 
-### 4.3 Delete Announcement
+### 5.3 Delete Announcement
 -   **Endpoint**: `DELETE http://localhost:5000/api/announcements/admin/:id`
 -   **Headers**:
     -   `Authorization`: `Bearer <ADMIN_JWT_TOKEN>`
 
-## 5. Error Responses
+## 6. Achievements (Admin Only)
+Requires `Authorization: Bearer <TOKEN>` in the request headers.
 
-### 5.1 Unauthorized Access
+### 6.1 Create Achievement
+-   **Endpoint**: `POST http://localhost:5000/api/achievements/admin`
+-   **Headers**:
+    -   `Content-Type`: `application/json`
+    -   `Authorization`: `Bearer <ADMIN_JWT_TOKEN>`
+-   **Body**:
+    ```json
+    {
+        "title": "Juara 1 Kompetisi Startup Nasional",
+        "description": "Tim mahasiswa Bisnis Digital meraih juara pertama dalam kompetisi startup tingkat nasional.",
+        "image": "https://images.unsplash.com/photo-1552664730-d307ca884978",
+        "award": "Juara 1 Nasional",
+        "date": "2026-03-01"
+    }
+    ```
+
+### 6.2 Update Achievement
+-   **Endpoint**: `PUT http://localhost:5000/api/achievements/admin/:id`
+-   **Headers**:
+    -   `Content-Type`: `application/json`
+    -   `Authorization`: `Bearer <ADMIN_JWT_TOKEN>`
+-   **Body**:
+    ```json
+    {
+        "title": "Updated Achievement Title",
+        "award": "Medali Perak"
+    }
+    ```
+
+### 6.3 Delete Achievement
+-   **Endpoint**: `DELETE http://localhost:5000/api/achievements/admin/:id`
+-   **Headers**:
+    -   `Authorization`: `Bearer <ADMIN_JWT_TOKEN>`
+
+## 7. Error Responses
+
+### 7.1 Unauthorized Access
 -   Accessing admin endpoints without a token: `401 Unauthorized`
     ```json
     { "message": "Not authorized, no token" }
     ```
 
-### 5.2 Invalid Credentials
+### 7.2 Invalid Credentials
 -   Login with wrong email or password: `401 Unauthorized`
     ```json
     { "message": "Invalid credentials" }
     ```
 
-### 5.3 Duplicate Admin
+### 7.3 Duplicate Admin
 -   Registering with an existing email: `400 Bad Request`
     ```json
     { "message": "Admin with this email already exists" }

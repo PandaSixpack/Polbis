@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const Announcement = require('./models/Announcement');
 const Admin = require('./models/Admin');
+const Achievement = require('./models/Achievement');
 
 // Load env vars
 dotenv.config();
@@ -39,10 +40,28 @@ const sampleAnnouncements = [
   }
 ];
 
+const sampleAchievements = [
+  {
+    "title": "Juara 1 Kompetisi Startup Nasional",
+    "description": "Tim mahasiswa Bisnis Digital meraih juara pertama dalam kompetisi startup tingkat nasional.",
+    "image": "https://images.unsplash.com/photo-1552664730-d307ca884978",
+    "award": "Juara 1 Nasional",
+    "date": "2026-03-01"
+  },
+  {
+    "title": "Medali Emas Olimpiade Logistik",
+    "description": "Mahasiswa Logistik Bisnis meraih medali emas dalam Olimpiade Logistik Asia Tenggara.",
+    "image": "https://images.unsplash.com/photo-1553877522-43269d4ea984",
+    "award": "Medali Emas",
+    "date": "2026-02-01"
+  }
+];
+
 const importData = async () => {
     try {
         await Announcement.deleteMany();
         await Admin.deleteMany();
+        await Achievement.deleteMany();
 
         const createdAdmins = await Admin.insertMany(sampleAdmins);
         const adminId = createdAdmins[0]._id;
@@ -52,7 +71,13 @@ const importData = async () => {
             createdBy: adminId
         }));
 
+        const achievementsWithAdmin = sampleAchievements.map(achievement => ({
+            ...achievement,
+            createdBy: adminId
+        }));
+
         await Announcement.insertMany(announcementsWithAdmin);
+        await Achievement.insertMany(achievementsWithAdmin);
 
         console.log('Data Imported!');
         process.exit();
@@ -66,6 +91,7 @@ const destroyData = async () => {
     try {
         await Announcement.deleteMany();
         await Admin.deleteMany();
+        await Achievement.deleteMany();
 
         console.log('Data Destroyed!');
         process.exit();
