@@ -17,6 +17,11 @@ const announcementSchema = new mongoose.Schema({
         type: String,
         enum: ['low', 'normal', 'high'],
         default: 'normal'
+    },
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Admin',
+        required: true
     }
 }, {
     timestamps: true

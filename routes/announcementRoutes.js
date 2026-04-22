@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { protectAdmin } = require('../middleware/adminAuthMiddleware');
 const {
     getAnnouncements,
     getAnnouncement,
@@ -8,13 +9,19 @@ const {
     deleteAnnouncement
 } = require('../controllers/announcementController');
 
+// Public routes
 router.route('/')
-    .get(getAnnouncements)
-    .post(createAnnouncement);
+    .get(getAnnouncements);
 
 router.route('/:id')
-    .get(getAnnouncement)
-    .put(updateAnnouncement)
-    .delete(deleteAnnouncement);
+    .get(getAnnouncement);
+
+// Admin routes
+router.route('/admin')
+    .post(protectAdmin, createAnnouncement);
+
+router.route('/admin/:id')
+    .put(protectAdmin, updateAnnouncement)
+    .delete(protectAdmin, deleteAnnouncement);
 
 module.exports = router;

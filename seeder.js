@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const Announcement = require('./models/Announcement');
+const Admin = require('./models/Admin');
 
 // Load env vars
 dotenv.config();
@@ -9,7 +10,15 @@ dotenv.config();
 // Connect to db
 connectDB();
 
-const sampleData = [
+const sampleAdmins = [
+  {
+    "name": "Super Admin",
+    "email": "admin@example.com",
+    "password": "password123"
+  }
+];
+
+const sampleAnnouncements = [
   {
     "title": "Pendaftaran Mahasiswa Baru Gelombang 2 Dibuka",
     "content": "Pendaftaran mahasiswa baru untuk tahun akademik 2026/2027 gelombang 2 telah dibuka. Dapatkan diskon biaya pendaftaran hingga 25% untuk pendaftar awal.",
@@ -32,9 +41,18 @@ const sampleData = [
 
 const importData = async () => {
     try {
-        await Announcement.deleteMany(); // Clear existing data
+        await Announcement.deleteMany();
+        await Admin.deleteMany();
 
-        await Announcement.insertMany(sampleData);
+        const createdAdmins = await Admin.insertMany(sampleAdmins);
+        const adminId = createdAdmins[0]._id;
+
+        const announcementsWithAdmin = sampleAnnouncements.map(announcement => ({
+            ...announcement,
+            createdBy: adminId
+        }));
+
+        await Announcement.insertMany(announcementsWithAdmin);
 
         console.log('Data Imported!');
         process.exit();
@@ -47,6 +65,7 @@ const importData = async () => {
 const destroyData = async () => {
     try {
         await Announcement.deleteMany();
+        await Admin.deleteMany();
 
         console.log('Data Destroyed!');
         process.exit();

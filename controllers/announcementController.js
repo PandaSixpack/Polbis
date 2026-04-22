@@ -70,10 +70,14 @@ const createAnnouncement = async (req, res) => {
             title,
             content,
             date,
-            priority
+            priority,
+            createdBy: req.admin.id // Assign the ID of the authenticated admin
         });
 
-        res.status(201).json(announcement);
+        res.status(201).json({
+            message: 'Announcement created successfully',
+            data: announcement
+        });
     } catch (error) {
         res.status(500).json({ message: 'Server Error', error: error.message });
     }
@@ -90,13 +94,21 @@ const updateAnnouncement = async (req, res) => {
             return res.status(404).json({ message: 'Announcement not found' });
         }
 
+        // Check if the logged-in admin is the creator of the announcement
+        if (announcement.createdBy.toString() !== req.admin.id) {
+            return res.status(403).json({ message: 'Not authorized to update this announcement' });
+        }
+
         announcement = await Announcement.findByIdAndUpdate(
             req.params.id,
             req.body,
             { new: true, runValidators: true }
         );
 
-        res.status(200).json(announcement);
+        res.status(200).json({
+            message: 'Announcement updated successfully',
+            data: announcement
+        });
     } catch (error) {
         if (error.name === 'CastError') {
              return res.status(404).json({ message: 'Announcement not found' });
@@ -116,9 +128,14 @@ const deleteAnnouncement = async (req, res) => {
             return res.status(404).json({ message: 'Announcement not found' });
         }
 
+        // Check if the logged-in admin is the creator of the announcement
+        if (announcement.createdBy.toString() !== req.admin.id) {
+            return res.status(403).json({ message: 'Not authorized to delete this announcement' });
+        }
+
         await announcement.deleteOne();
 
-        res.status(200).json({ message: `Deleted announcement ${req.params.id}`, id: req.params.id });
+        res.status(200).json({ message: `Announcement ${req.params.id} removed`, id: req.params.id });
     } catch (error) {
         if (error.name === 'CastError') {
              return res.status(404).json({ message: 'Announcement not found' });
