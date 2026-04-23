@@ -92,7 +92,35 @@ No authentication required.
 ### 4.2 Get Single Achievement
 -   **Endpoint**: `GET http://localhost:5000/api/achievements/:id`
 
-## 5. Announcements (Admin Only)
+## 5. Events (Public)
+No authentication required.
+
+### 5.1 Get All Events
+-   **Endpoint**: `GET http://localhost:5000/api/events`
+-   **Query Params (Optional)**:
+    -   `page`: `1`
+    -   `limit`: `10`
+    -   `title`: `workshop`
+    -   `category`: `Workshop`
+
+### 5.2 Get Single Event
+-   **Endpoint**: `GET http://localhost:5000/api/events/:id`
+
+## 6. Programs (Public)
+No authentication required.
+
+### 6.1 Get All Programs
+-   **Endpoint**: `GET http://localhost:5000/api/programs`
+-   **Query Params (Optional)**:
+    -   `page`: `1`
+    -   `limit`: `10`
+    -   `title`: `bisnis`
+    -   `career`: `manager`
+
+### 6.2 Get Single Program
+-   **Endpoint**: `GET http://localhost:5000/api/programs/:id`
+
+## 7. Announcements (Admin Only)
 Requires `Authorization: Bearer <TOKEN>` in the request headers.
 
 ### 5.1 Create Announcement
@@ -123,15 +151,15 @@ Requires `Authorization: Bearer <TOKEN>` in the request headers.
     }
     ```
 
-### 5.3 Delete Announcement
+### 7.3 Delete Announcement
 -   **Endpoint**: `DELETE http://localhost:5000/api/announcements/admin/:id`
 -   **Headers**:
     -   `Authorization`: `Bearer <ADMIN_JWT_TOKEN>`
 
-## 6. Achievements (Admin Only)
+## 8. Achievements (Admin Only)
 Requires `Authorization: Bearer <TOKEN>` in the request headers.
 
-### 6.1 Create Achievement
+### 8.1 Create Achievement
 -   **Endpoint**: `POST http://localhost:5000/api/achievements/admin`
 -   **Headers**:
     -   `Content-Type`: `application/json`
@@ -147,7 +175,7 @@ Requires `Authorization: Bearer <TOKEN>` in the request headers.
     }
     ```
 
-### 6.2 Update Achievement
+### 8.2 Update Achievement
 -   **Endpoint**: `PUT http://localhost:5000/api/achievements/admin/:id`
 -   **Headers**:
     -   `Content-Type`: `application/json`
@@ -160,26 +188,89 @@ Requires `Authorization: Bearer <TOKEN>` in the request headers.
     }
     ```
 
-### 6.3 Delete Achievement
+### 8.3 Delete Achievement
 -   **Endpoint**: `DELETE http://localhost:5000/api/achievements/admin/:id`
 -   **Headers**:
     -   `Authorization`: `Bearer <ADMIN_JWT_TOKEN>`
 
-## 7. Error Responses
+## 9. Events (Admin Only)
+Requires `Authorization: Bearer <TOKEN>` in the request headers.
 
-### 7.1 Unauthorized Access
+### 9.1 Create Event
+-   **Endpoint**: `POST http://localhost:5000/api/events/admin`
+-   **Headers**:
+    -   `Content-Type`: `application/json`
+    -   `Authorization`: `Bearer <ADMIN_JWT_TOKEN>`
+-   **Body**:
+    ```json
+    {
+        "title": "Workshop Digital Marketing Strategy",
+        "description": "Pelatihan intensif tentang strategi pemasaran digital.",
+        "date": "15 Maret 2026",
+        "category": "Workshop",
+        "image": "https://images.unsplash.com/photo-1552664730-d307ca884978"
+    }
+    ```
+
+### 9.2 Update Event
+-   **Endpoint**: `PUT http://localhost:5000/api/events/admin/:id`
+-   **Headers**:
+    -   `Content-Type`: `application/json`
+    -   `Authorization`: `Bearer <ADMIN_JWT_TOKEN>`
+
+### 9.3 Delete Event
+-   **Endpoint**: `DELETE http://localhost:5000/api/events/admin/:id`
+-   **Headers**:
+    -   `Authorization`: `Bearer <ADMIN_JWT_TOKEN>`
+
+## 10. Programs (Admin Only)
+Requires `Authorization: Bearer <TOKEN>` in the request headers.
+
+### 10.1 Create Program
+-   **Endpoint**: `POST http://localhost:5000/api/programs/admin`
+-   **Headers**:
+    -   `Content-Type`: `application/json`
+    -   `Authorization`: `Bearer <ADMIN_JWT_TOKEN>`
+-   **Body**:
+    ```json
+    {
+        "id": "bisnis-digital-new",
+        "title": "Bisnis Digital New",
+        "description": "Program studi baru.",
+        "highlights": ["Marketing", "Analytics"],
+        "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
+        "link": "/hubungi",
+        "curriculum": ["Fundamental", "SEO"],
+        "careers": ["Manager", "Analyst"]
+    }
+    ```
+
+### 10.2 Update Program
+-   **Endpoint**: `PUT http://localhost:5000/api/programs/admin/:id`
+-   **Headers**:
+    -   `Content-Type`: `application/json`
+    -   `Authorization`: `Bearer <ADMIN_JWT_TOKEN>`
+
+### 10.3 Delete Program
+-   **Endpoint**: `DELETE http://localhost:5000/api/programs/admin/:id`
+-   **Headers**:
+    -   `Authorization`: `Bearer <ADMIN_JWT_TOKEN>`
+
+## 11. Error Responses
+
+### 11.1 Unauthorized Access
 -   Accessing admin endpoints without a token: `401 Unauthorized`
     ```json
     { "message": "Not authorized, no token" }
     ```
 
-### 7.2 Invalid Credentials
+### 11.2 Invalid Credentials
 -   Login with wrong email or password: `401 Unauthorized`
     ```json
     { "message": "Invalid credentials" }
     ```
 
-### 7.3 Duplicate Admin
+### 11.3 Duplicate Admin
 -   Registering with an existing email: `400 Bad Request`
     ```json
     { "message": "Admin with this email already exists" }

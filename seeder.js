@@ -4,6 +4,8 @@ const connectDB = require('./config/db');
 const Announcement = require('./models/Announcement');
 const Admin = require('./models/Admin');
 const Achievement = require('./models/Achievement');
+const Event = require('./models/Event');
+const Program = require('./models/Program');
 
 // Load env vars
 dotenv.config();
@@ -57,27 +59,64 @@ const sampleAchievements = [
   }
 ];
 
+const sampleEvents = [
+  {
+    "title": "Workshop Digital Marketing Strategy",
+    "description": "Pelatihan intensif tentang strategi pemasaran digital untuk meningkatkan brand awareness dan penjualan online dengan praktik langsung.",
+    "date": "15 Maret 2026",
+    "category": "Workshop",
+    "image": "https://images.unsplash.com/photo-1552664730-d307ca884978"
+  },
+  {
+    "title": "Seminar Teknologi AI dan Machine Learning",
+    "description": "Menghadirkan praktisi industri untuk berbagi pengalaman implementasi AI dalam bisnis modern dan tren teknologi terkini.",
+    "date": "22 Maret 2026",
+    "category": "Seminar",
+    "image": "https://images.unsplash.com/photo-1591115765373-5207764f72e7"
+  }
+];
+
+const samplePrograms = [
+  {
+    "id": "bisnis-digital",
+    "title": "Bisnis Digital",
+    "description": "Program studi yang mempersiapkan mahasiswa menjadi profesional di bidang bisnis digital.",
+    "highlights": [
+      "Digital Marketing",
+      "E-Commerce",
+      "Business Analytics"
+    ],
+    "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
+    "link": "/hubungi",
+    "curriculum": [
+      "Fundamental Bisnis Digital",
+      "SEO",
+      "Project Management"
+    ],
+    "careers": [
+      "Digital Marketing Manager",
+      "Business Analyst"
+    ]
+  }
+];
+
 const importData = async () => {
     try {
         await Announcement.deleteMany();
         await Admin.deleteMany();
         await Achievement.deleteMany();
+        await Event.deleteMany();
+        await Program.deleteMany();
 
         const createdAdmins = await Admin.insertMany(sampleAdmins);
         const adminId = createdAdmins[0]._id;
 
-        const announcementsWithAdmin = sampleAnnouncements.map(announcement => ({
-            ...announcement,
-            createdBy: adminId
-        }));
+        const addAdminRef = (data) => data.map(item => ({ ...item, createdBy: adminId }));
 
-        const achievementsWithAdmin = sampleAchievements.map(achievement => ({
-            ...achievement,
-            createdBy: adminId
-        }));
-
-        await Announcement.insertMany(announcementsWithAdmin);
-        await Achievement.insertMany(achievementsWithAdmin);
+        await Announcement.insertMany(addAdminRef(sampleAnnouncements));
+        await Achievement.insertMany(addAdminRef(sampleAchievements));
+        await Event.insertMany(addAdminRef(sampleEvents));
+        await Program.insertMany(addAdminRef(samplePrograms));
 
         console.log('Data Imported!');
         process.exit();
@@ -92,6 +131,8 @@ const destroyData = async () => {
         await Announcement.deleteMany();
         await Admin.deleteMany();
         await Achievement.deleteMany();
+        await Event.deleteMany();
+        await Program.deleteMany();
 
         console.log('Data Destroyed!');
         process.exit();

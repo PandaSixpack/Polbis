@@ -19,6 +19,8 @@ app.use(express.urlencoded({ extended: false })); // Parse URL-encoded bodies
 // Routes
 app.use('/api/announcements', require('./routes/announcementRoutes'));
 app.use('/api/achievements', require('./routes/achievementRoutes'));
+app.use('/api/events', require('./routes/eventRoutes'));
+app.use('/api/programs', require('./routes/programRoutes'));
 app.use('/api/admin', require('./routes/adminAuthRoutes'));
 
 // Basic error handler mapping for unhandled routes
