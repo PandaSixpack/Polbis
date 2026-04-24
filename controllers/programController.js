@@ -29,12 +29,10 @@ const getPrograms = async (req, res) => {
 
         res.status(200).json({
             data: programs,
-            pagination: {
-                currentPage: page,
-                totalPages,
-                totalItems,
-                limit
-            }
+            currentPage: page,
+            totalPages,
+            totalItems,
+            limit
         });
     } catch (error) {
         res.status(500).json({ message: 'Server Error', error: error.message });

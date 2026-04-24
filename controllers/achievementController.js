@@ -33,12 +33,10 @@ const getAchievements = async (req, res) => {
         res.status(200).json({
             message: 'Achievements fetched successfully',
             data: achievements,
-            pagination: {
-                currentPage: page,
-                totalPages,
-                totalItems,
-                limit
-            }
+            currentPage: page,
+            totalPages,
+            totalItems,
+            limit
         });
     } catch (error) {
         res.status(500).json({ message: 'Server Error', error: error.message });

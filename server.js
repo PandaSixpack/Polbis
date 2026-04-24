@@ -13,8 +13,8 @@ const app = express();
 
 // Middleware
 app.use(cors()); // Enable CORS for frontend integration
-app.use(express.json()); // Parse JSON bodies
-app.use(express.urlencoded({ extended: false })); // Parse URL-encoded bodies
+app.use(express.json({ limit: '10mb' })); // Increased limit for base64 images
+app.use(express.urlencoded({ extended: false, limit: '10mb' })); // Increased limit for base64 images
 
 // Routes
 app.use('/api/announcements', require('./routes/announcementRoutes'));
