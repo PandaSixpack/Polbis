@@ -22,6 +22,7 @@ app.use('/api/achievements', require('./routes/achievementRoutes'));
 app.use('/api/events', require('./routes/eventRoutes'));
 app.use('/api/programs', require('./routes/programRoutes'));
 app.use('/api/admin', require('./routes/adminAuthRoutes'));
+app.use('/api/contact', require('./routes/contactRoutes'));
 
 // Basic error handler mapping for unhandled routes
 app.use((req, res, next) => {

@@ -1,0 +1,28 @@
+2026-04-25 22:38:20 [INFO]: [REQUEST] POST /api/contact
+2026-04-25 22:38:20 [INFO]: [DATA] namaLengkap=User Test, email=adelrhk@gmail.com, subjek=Tanya Pendaftaran
+2026-04-25 22:38:20 [INFO]: [DB] Saving contact...
+2026-04-25 22:38:21 [INFO]: [DB] Contact saved
+2026-04-25 22:38:21 [INFO]: [EMAIL] Sending email...
+2026-04-25 22:38:21 [ERROR]: [ERROR] Contact API failed: connect ECONNREFUSED ::1:587
+2026-04-25 22:38:21 [ERROR]: [ERROR] Email failed: connect ECONNREFUSED ::1:587
+2026-04-25 22:40:54 [INFO]: [REQUEST] POST /api/contact
+2026-04-25 22:40:54 [INFO]: [DATA] namaLengkap=User Test, email=adelrhk@gmail.com, subjek=Tanya Pendaftaran
+2026-04-25 22:40:54 [INFO]: [DB] Saving contact...
+2026-04-25 22:40:54 [INFO]: [DB] Contact saved
+2026-04-25 22:40:54 [INFO]: [EMAIL] Sending email...
+2026-04-25 22:40:54 [INFO]: [DEBUG] SMTP Config: Host=smtp.gmail.com, Port=465
+2026-04-25 22:40:58 [INFO]: [SUCCESS] Email sent: Tanya Pendaftaran from adelrhk@gmail.com
+2026-04-25 22:42:09 [INFO]: [REQUEST] POST /api/contact
+2026-04-25 22:42:09 [INFO]: [DATA] namaLengkap=User Test, email=adamfikarg@gmail.com, subjek=Tanya Pendaftaran
+2026-04-25 22:42:09 [INFO]: [DB] Saving contact...
+2026-04-25 22:42:09 [INFO]: [DB] Contact saved
+2026-04-25 22:42:09 [INFO]: [EMAIL] Sending email...
+2026-04-25 22:42:09 [INFO]: [DEBUG] SMTP Config: Host=smtp.gmail.com, Port=465
+2026-04-25 22:42:12 [INFO]: [SUCCESS] Email sent: Tanya Pendaftaran from adamfikarg@gmail.com
+2026-04-25 22:46:46 [INFO]: [REQUEST] POST /api/contact
+2026-04-25 22:46:46 [INFO]: [DATA] namaLengkap=User Test, email=adamfikarg@gmail.com, subjek=Tanya Pendaftaran
+2026-04-25 22:46:46 [INFO]: [DB] Saving contact...
+2026-04-25 22:46:46 [INFO]: [DB] Contact saved
+2026-04-25 22:46:46 [INFO]: [EMAIL] Sending email...
+2026-04-25 22:46:46 [INFO]: [DEBUG] SMTP Config: Host=smtp.gmail.com, Port=465
+2026-04-25 22:46:50 [INFO]: [SUCCESS] Email sent: Tanya Pendaftaran from adamfikarg@gmail.com
